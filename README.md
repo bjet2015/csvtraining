@@ -70,4 +70,15 @@ change splitting fraction from 0.5 to a small value, like 0.01. This will put on
 
 ## Loading the new tagger
 
-TODO
+The file generated in the notebook is uploaded to `CMSSWXYZ/src/HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml`. Now, add all necessary packages and add these lines to the forest:
+
+```
+#replace pp CSVv2 with PbPb CSVv2 (positive and negative taggers unchanged!)
+process.load('RecoBTag.CSVscikit.csvscikitTagJetTags_cfi')
+process.load('RecoBTag.CSVscikit.csvscikitTaggerProducer_cfi')
+process.akPu4PFCombinedSecondaryVertexV2BJetTags = process.pfCSVscikitJetTags.clone()
+process.akPu4PFCombinedSecondaryVertexV2BJetTags.tagInfos=cms.VInputTag(cms.InputTag("akPu4PFImpactParameterTagInfos"), cms.InputTag("akPu4PFSecondaryVertexTagInfos"))
+process.CSVscikitTags.weightFile=cms.FileInPath('HeavyIonsAnalysis/JetAnalysis/data/bTagCSVv2PbPb_758p3_Jan2017_BDTG_weights.xml')
+```
+
+Should work :)
